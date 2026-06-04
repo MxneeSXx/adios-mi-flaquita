@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adios Mi Flaquita Hermosa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #050608 0%, #161a24 100%);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            overflow: hidden;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* --- Texto de Fondo (Más Visible) --- */
+        .background-container {
+            position: absolute;
+            top: 15%;
+            width: 100%;
+            text-align: center;
+            z-index: 0;
+        }
+        .background-text {
+            font-size: 15vw;
+            color: rgba(135, 206, 250, 0.4); 
+            text-shadow: 0 0 30px rgba(65, 105, 225, 0.8), 0 0 60px rgba(65, 105, 225, 0.4);
+            animation: pulseText 4s ease-in-out infinite alternate;
+            user-select: none;
+        }
+
+        @keyframes pulseText {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        /* --- Lluvia de Brillitos (Puntitos) --- */
+        .sparkle {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) scale(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(110vh) scale(1.2); opacity: 0; }
+        }
+
+        /* --- Estrellas Fugaces Mejoradas --- */
+        .shooting-star {
+            position: absolute;
+            top: -10%;
+            width: 2px;
+            height: 150px;
+            background: linear-gradient(to bottom, rgba(255,255,255,1), rgba(255,255,255,0));
+            box-shadow: 0 0 20px 2px rgba(255, 255, 255, 1);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+            animation: shoot linear forwards;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateY(0) translateX(0) rotate(-20deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(120vh) translateX(20vw) rotate(-20deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- Estructura del Tulipán --- */
+        .bouquet {
+            position: relative;
+            width: 600px;
+            height: 700px;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+        }
+
+        .tulip {
+            position: absolute;
+            bottom: 60px;
+            transform-origin: bottom center;
+            transition: transform 0.5s ease-out;
+        }
+
+        .stem {
+            position: absolute;
+            bottom: 0;
+            left: -4px;
+            width: 8px;
+            background: linear-gradient(to right, #2d6a4f, #40916c);
+            border-radius: 4px;
+        }
+
+        .flower {
+            position: absolute;
+            left: -25px;
+            width: 50px;
+            height: 70px;
+            border-radius: 25px 25px 15px 15px;
+            box-shadow: inset -5px 0 10px rgba(0,0,0,0.3);
+        }
+
+        .flower::before, .flower::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+            height: 65px;
+            border-radius: 20px 20px 10px 10px;
+        }
+
+        .flower::before { left: -10px; transform: rotate(-15deg); }
+        .flower::after { right: -10px; transform: rotate(15deg); }
+
+        .center-petal {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            width: 30px;
+            height: 70px;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .leaf {
+            position: absolute;
+            background: linear-gradient(to bottom, #40916c, #2d6a4f);
+            border-radius: 50% 50% 0 0;
+            transform-origin: bottom center;
+        }
+
+        /* --- Lazo Pink --- */
+        .bow {
+            position: absolute;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+        .bow-knot {
+            width: 30px; height: 30px;
+            background-color: #C71585; border-radius: 50%;
+            box-shadow: 0 0 15px rgba(199, 21, 133, 0.5);
+        }
+
+        /* --- Botón Mensaje --- */
+        .btn-open {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 25px;
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        .btn-open:hover {
+            background: rgba(100, 149, 237, 0.3);
+            border-color: #87CEFA;
+        }
+
+        /* --- Ventana Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: linear-gradient(135deg, #161a24 0%, #050608 100%);
+            padding: 40px;
+            max-width: 500px;
+            width: 80%;
+            border: 1px solid #4169E1;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 30px rgba(65, 105, 225, 0.3);
+        }
+        .modal-text {
+            font-family: 'Poppins', sans-serif;
+            color: #e0e0e0;
+            line-height: 1.8;
+            font-size: 16px;
+            text-align: justify;
+        }
+        .modal-text h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 40px;
+            color: #87CEFA;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .btn-close {
+            margin-top: 25px;
+            background: #C71585;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        @keyframes sway {
+            0% { transform: rotate(var(--rot-start)); }
+            100% { transform: rotate(var(--rot-end)); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-container">
+        <div class="background-text">Te amo</div>
+    </div>
+
+    <div class="bouquet" id="bouquet"></div>
+
+    <div class="bow">
+        <div class="bow-knot"></div>
+    </div>
+
+    <button class="btn-open" onclick="openModal()">Leer mensaje 🩵</button>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <div class="modal-text">
+                <h2>Hola Abigail</h2>
+                <p>Este será mi último obsequio y espero puedas conservarlo para siempre, espero puedas lograr todos tus sueños y seas la niña más feliz e imparable del mundo, eres alguien de admirar, una súper talentosa y risueña, la mejor persona que he conocido y que sin duda alguna eres lo más importante en mi vida.</p>
+                <p>No me voy por qué así lo desee, si no por qué así lo dicen las cosas, no te deseo mal y tampoco quiero terminar mal contigo, me voy por qué es lo mejor para ambos antes de terminar explotando y terminar como enemigos.</p>
+                <p style="text-align: center; font-weight: bold; color: #87CEFA;">Nunca olvides que te amo MI FLAQUITA HERMOSA 🩵</p>
+            </div>
+            <button class="btn-close" onclick="closeModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        const bouquet = document.getElementById('bouquet');
+        const modal = document.getElementById('modal');
+
+        // Nota: Asegúrate de guardar este archivo como "index.html" en tu repositorio de GitHub 
+        // para que GitHub Pages lo reconozca automáticamente como la página principal.
+
+        function openModal() { modal.style.display = 'flex'; }
+        function closeModal() { modal.style.display = 'none'; }
+
+        const colors = [
+            { main: '#1E90FF', dark: '#00008B', petal: '#4169E1' },
+            { main: '#6495ED', dark: '#0047AB', petal: '#4169E1' },
+            { main: '#00BFFF', dark: '#0000CD', petal: '#1E90FF' },
+            { main: '#87CEFA', dark: '#4169E1', petal: '#6495ED' },
+            { main: '#B0E0E6', dark: '#1E90FF', petal: '#87CEEB' }
+        ];
+
+        for (let i = 0; i < 20; i++) {
+            const t = document.createElement('div');
+            t.className = 'tulip';
+            
+            const color = colors[i % colors.length];
+            const baseAngle = (i - 10) * 6;
+            const height = 320 + Math.random() * 280;
+            const duration = 3 + Math.random() * 3;
+            
+            t.style.setProperty('--rot-start', `${baseAngle - 3}deg`);
+            t.style.setProperty('--rot-end', `${baseAngle + 3}deg`);
+            
+            t.style.zIndex = Math.floor(height);
+            t.style.animation = `sway ${duration}s ease-in-out infinite alternate`;
+            t.style.animationDelay = `${Math.random() * -5}s`;
+
+            t.innerHTML = `
+                <div class="stem" style="height: ${height}px;"></div>
+                <div class="leaf" style="width: 25px; height: 80px; left: -20px; bottom: ${height/4}px; transform: rotate(-35deg);"></div>
+                <div class="leaf" style="width: 30px; height: 100px; left: 5px; bottom: ${height/3}px; transform: rotate(35deg);"></div>
+                <div class="flower" style="bottom: ${height - 5}px; background: linear-gradient(to bottom, ${color.main}, ${color.dark});">
+                    <div class="center-petal" style="background-color: ${color.petal};"></div>
+                </div>
+            `;
+            
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .tulip:nth-child(${i+1}) .flower::before, 
+                .tulip:nth-child(${i+1}) .flower::after { background: ${color.petal}; }
+            `;
+            document.head.appendChild(style);
+
+            bouquet.appendChild(t);
+        }
+
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            const size = Math.random() * 5 + 2;
+            sparkle.style.width = size + 'px';
+            sparkle.style.height = size + 'px';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            const duration = 4 + Math.random() * 6;
+            sparkle.style.animationDuration = duration + 's';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), duration * 1000);
+        }
+        setInterval(createSparkle, 80);
+
+        function createShootingStar() {
+            const star = document.createElement('div');
+            star.className = 'shooting-star';
+            star.style.left = Math.random() * 100 + 'vw';
+            
+            const duration = 1 + Math.random() * 2;
+            star.style.animationDuration = duration + 's';
+
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), duration * 1000);
+        }
+
+        setInterval(createShootingStar, 1200);
+    </script>
+</body>
+</html>
